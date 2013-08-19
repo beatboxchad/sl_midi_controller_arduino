@@ -1,10 +1,11 @@
-#define LED 13   // LED pin on Arduino board
-#define button1 9              // 1st trigger button
-#define button2 8               // 2nd trigger button
-#define button3 7								// 3rd trigger button
-#define switch1 6								// Toggle switch 1
-#define switch2 5								// Toggle switch 2
-#define switch3 4								// Toggle switch 3
+#define LED 13   		// LED pin on Arduino board
+#define button1 9		// 1st trigger button
+#define button2 8		// 2nd trigger button
+#define button3 7		// 3rd trigger button
+#define switch1 6		// Toggle switch 1
+#define switch2 5		// Toggle switch 2
+#define switch3 4		// Toggle switch 3
+#define switch4 3		// footswitch for tap tempo, BOOYA. I'll give it to the drummer. Damnit, Jim, I'm a guitarist, not...
 
 //Variables
 int button1LastState = 0;
@@ -68,7 +69,7 @@ pinMode(switch3, INPUT);
 pinMode(button1, INPUT);
 pinMode(button2, INPUT);
 pinMode(button3, INPUT);
-Serial.begin(115200);
+Serial.begin(115200); //this will change to the actual MIDI speed but for testing I've been using hairless.
 
 blinkLed(3);
 
@@ -107,4 +108,12 @@ void loop() {
 		}
 	}
 	button3LastState = button3CurrentState;
+
+	if (button4CurrentState == 1){
+		if(button4LastState == 0){
+			noteOn(0x90, 88, 64); // just pulled '88' out of thin air, better test this...
+			//blinkLed(3);
+		}
+	}
+	button4LastState = button4CurrentState;
 }
